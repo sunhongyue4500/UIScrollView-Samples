@@ -28,7 +28,9 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-//    NSLog(@"%s", __PRETTY_FUNCTION__);
+    // 只要不松手一直在调用，可以获取scrollView的offset
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    [self logDraggingAndDecelerating];
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
@@ -42,12 +44,14 @@
     NSLog(@"%s velocity: %@, targetContentOffset: %@", __PRETTY_FUNCTION__,
           [NSValue valueWithCGPoint:velocity],
           [NSValue valueWithCGPoint:*targetContentOffset]);
+    
+//    *targetContentOffset = CGPointMake(0, self.scrollView.contentSize.height / 2);
     [self logDraggingAndDecelerating];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, decelerate ? @"减速":@"停止");
     [self logDraggingAndDecelerating];
 }
 
@@ -65,7 +69,7 @@
 
 - (void)logDraggingAndDecelerating
 {
-    NSLog(@"%@ %@", self.scrollView.dragging ? @"dragging" : @"", self.scrollView.decelerating ? @"decelerating" : @"");
+    NSLog(@"isDraging:%@ isDeceleratin:%@", self.scrollView.isDragging ? @"dragging" : @"", self.scrollView.isDecelerating ? @"decelerating" : @"");
 }
 
 @end

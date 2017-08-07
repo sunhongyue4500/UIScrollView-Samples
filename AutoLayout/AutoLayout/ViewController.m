@@ -13,7 +13,7 @@
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *contentView;
-
+/** contentView.width  and superView.width constraint*/ 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *contentWidthConstraint;
 @property (assign, nonatomic) int pageBeforeRotation;
 @property (assign, nonatomic) int totalPages;
@@ -33,6 +33,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - **************** 屏幕旋转处理
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     int page = roundf(self.scrollView.contentOffset.x / self.scrollView.frame.size.width);
@@ -67,6 +68,8 @@
             [view removeFromSuperview];
         }
         [self.contentWidthConstraint autoRemove];
+        // 依据页数修改宽度约束
+        // 拉长contentView
         self.contentWidthConstraint = [self.contentView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.scrollView withMultiplier:pages];
         
         UILabel *prevLabel = nil;
@@ -84,20 +87,24 @@
             
             if (!prevLabel) {
                 // Align to contentView
+                // 第一个label 和scrollview的左边对齐
                 [pageLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft];
             } else {
                 // Align to prev label
+                // 其余label的头和上一个label的尾对齐
                 [pageLabel autoConstrainAttribute:ALAttributeLeading toAttribute:ALAttributeTrailing ofView:prevLabel];
             }
             
             if (i == pages - 1) {
                 // Last page
+                // 最后一个label和scroolView的右边对齐
                 [pageLabel autoPinEdgeToSuperviewEdge:ALEdgeRight];
             }
             
             prevLabel = pageLabel;
         }
         
+        // 内容偏移清零
         self.scrollView.contentOffset = CGPointZero;
     
         [self.view setNeedsLayout];

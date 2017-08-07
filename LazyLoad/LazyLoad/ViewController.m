@@ -44,6 +44,7 @@
     [self fetchDataFromServer];
 }
 
+#pragma mark - **************** AFNetworking从server获取数据
 - (void)fetchDataFromServer
 {
     static NSString *apiURL = @"http://image.baidu.com/search/acjson?tn=resultjson_com&ipn=rj&ie=utf-8&oe=utf-8&word=cat&queryWord=dog";
@@ -117,6 +118,7 @@
 {
     static NSString *referer = @"http://image.baidu.com/i?tn=baiduimage&ipn=r&ct=201326592&cl=2&lm=-1&st=-1&fm=index&fr=&sf=1&fmq=&pv=&ic=0&nc=1&z=&se=1&showtab=0&fb=0&width=&height=&face=0&istype=2&ie=utf-8&word=cat&oq=cat&rsp=-1";
     SDWebImageDownloader *downloader = [[SDWebImageManager sharedManager] imageDownloader];
+    // 设置
     [downloader setValue:referer forHTTPHeaderField:@"Referer"];
     
     NSDictionary *obj = [self objectForRow:indexPath.row];
@@ -127,6 +129,7 @@
         SDWebImageManager *manager = [SDWebImageManager sharedManager];
         CGRect cellFrame = [self.tableView rectForRowAtIndexPath:indexPath];
         BOOL shouldLoadImage = YES;
+        // 如果有滚动到的目标rect以及当前cell与目标rect有交集，同时还判断了是用户松开手指开始减速则
         if (self.targetRect && !CGRectIntersectsRect([self.targetRect CGRectValue], cellFrame)) {
             SDImageCache *cache = [manager imageCache];
             NSString *key = [manager cacheKeyForURL:targetURL];
@@ -137,7 +140,7 @@
         if (shouldLoadImage) {
             [cell.photoView sd_setImageWithURL:targetURL placeholderImage:nil options:SDWebImageHandleCookies completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                 if (!error && [imageURL isEqual:targetURL]) {
-                    // fade in animation
+                    // fade in animation 渐变动画
                     [UIView animateWithDuration:0.25 animations:^{
                         cell.photoView.alpha = 1.0;
                     }];
@@ -152,6 +155,7 @@
     }
 }
 
+/** 对可见cell进行设置*/
 - (void)loadImageForVisibleCells
 {
     NSArray *cells = [self.tableView visibleCells];
@@ -160,6 +164,8 @@
         [self setupCell:cell withIndexPath:indexPath];
     }
 }
+
+#pragma mark - **************** UIScrollViewDelegate
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {

@@ -168,6 +168,7 @@
 				TargetAttributes = {
 					9FE68D1C1A3C4D440077B885 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 7PJXA64S7Z;
 					};
 					9FE68D351A3C4D440077B885 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -343,6 +344,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 7PJXA64S7Z;
 				INFOPLIST_FILE = Delegate/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -353,6 +355,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 7PJXA64S7Z;
 				INFOPLIST_FILE = Delegate/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
